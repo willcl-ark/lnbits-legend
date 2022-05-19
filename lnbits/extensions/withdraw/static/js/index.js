@@ -19,6 +19,7 @@ var mapWithdrawLink = function (obj) {
   obj.max_fsat = new Intl.NumberFormat(LOCALE).format(obj.max_withdrawable)
   obj.uses_left = obj.uses - obj.used
   obj.print_url = [locationPath, 'print/', obj.id].join('')
+  obj.print_url_tight = [locationPath, 'print/', obj.id, '?tight=yes'].join('')
   obj.withdraw_url = [locationPath, obj.id].join('')
   return obj
 }
