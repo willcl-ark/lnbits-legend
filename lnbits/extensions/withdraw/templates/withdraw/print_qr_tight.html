@@ -6,38 +6,11 @@
     <page size="A4" id="pdfprint">
         {% for threes in page %}
           {% for one in threes %}
-          <td>
-           
               <qrcode
                 :value="theurl + '/?lightning={{one}}'"
                 :options="{width: 150}"
                 style="margin:2px;"
               ></qrcode>
-           
-          {% endfor %}
-        {% endfor %}
-        {% for threes in page %}
-        {% for one in threes %}
-        <td>
-         
-            <qrcode
-              :value="theurl + '/?lightning={{one}}'"
-              :options="{width: 150}"
-              style="margin:2px;"
-            ></qrcode>
-         
-        {% endfor %}
-      {% endfor %}
-      {% for threes in page %}
-      {% for one in threes %}
-      <td>
-       
-          <qrcode
-            :value="theurl + '/?lightning={{one}}'"
-            :options="{width: 150}"
-            style="margin:2px;"
-          ></qrcode>
-       
       {% endfor %}
     {% endfor %}
     </page>
