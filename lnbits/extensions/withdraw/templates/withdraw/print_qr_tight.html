@@ -2,8 +2,9 @@
 
 <div class="row">
   <div class="" id="vue">
-    {% for page in link %}
+    
     <page size="A4" id="pdfprint">
+      {% for page in link %}
         {% for threes in page %}
           {% for one in threes %}
               <qrcode
@@ -13,8 +14,9 @@
               ></qrcode>
       {% endfor %}
     {% endfor %}
-    </page>
     {% endfor %}
+    </page>
+    
   </div>
 </div>
 {% endblock %} {% block styles %}
