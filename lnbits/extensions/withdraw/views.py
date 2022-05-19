@@ -70,7 +70,7 @@ async def img(request: Request, link_id):
 
 
 @withdraw_ext.get("/print/{link_id}", response_class=HTMLResponse)
-async def print_qr(request: Request, link_id, tight=None):
+async def print_qr(request: Request, link_id, tight=None, alone=None):
     link = await get_withdraw_link(link_id)
     if not link:
         raise HTTPException(
@@ -83,6 +83,11 @@ async def print_qr(request: Request, link_id, tight=None):
         if tight:
             return withdraw_renderer().TemplateResponse(
                 "withdraw/print_qr_tight.html",
+                {"request": request, "link": link.dict(), "unique": False},
+            )
+        if alone:
+            return withdraw_renderer().TemplateResponse(
+                "withdraw/print_qr_alone.html",
                 {"request": request, "link": link.dict(), "unique": False},
             )
         return withdraw_renderer().TemplateResponse(
@@ -105,6 +110,10 @@ async def print_qr(request: Request, link_id, tight=None):
     if tight:
         return withdraw_renderer().TemplateResponse(
             "withdraw/print_qr_tight.html", {"request": request, "link": linked, "unique": True}
+        )
+    if alone:
+        return withdraw_renderer().TemplateResponse(
+            "withdraw/print_qr_alone.html", {"request": request, "link": linked, "unique": True}
         )
     return withdraw_renderer().TemplateResponse(
         "withdraw/print_qr.html", {"request": request, "link": linked, "unique": True}

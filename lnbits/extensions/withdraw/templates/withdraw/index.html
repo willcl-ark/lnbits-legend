@@ -220,20 +220,20 @@
       {% endraw %}
       <div class="row q-mt-lg q-gutter-sm">
         <q-btn
-        outline
-        color="grey"
-        icon="content_copy"
-        @click="copyText(qrCodeDialog.data.lnurl, 'LNURL copied to clipboard!')"
-        class="q-ml-sm"
-        ><q-tooltip>Copy LNURL</q-tooltip></q-btn
-      >
-      <q-btn
-        outline
-        color="grey"
-        icon="share"
-        @click="copyText(qrCodeDialog.data.withdraw_url, 'Link copied to clipboard!')"
-        ><q-tooltip>Shareable link</q-tooltip></q-btn
-      >
+          outline
+          color="grey"
+          icon="content_copy"
+          @click="copyText(qrCodeDialog.data.lnurl, 'LNURL copied to clipboard!')"
+          class="q-ml-sm"
+          ><q-tooltip>Copy LNURL</q-tooltip></q-btn
+        >
+        <q-btn
+          outline
+          color="grey"
+          icon="share"
+          @click="copyText(qrCodeDialog.data.withdraw_url, 'Link copied to clipboard!')"
+          ><q-tooltip>Shareable link</q-tooltip></q-btn
+        >
         <q-btn
           outline
           color="grey"
@@ -250,6 +250,14 @@
           :href="qrCodeDialog.data.print_url_tight"
           target="_blank"
         ><q-tooltip>Tight format</q-tooltip></q-btn>
+        <q-btn
+        outline
+        color="grey"
+        icon="print"
+        type="a"
+        :href="qrCodeDialog.data.print_url_alone"
+        target="_blank"
+      ><q-tooltip>Lonely format</q-tooltip></q-btn>
         <q-btn v-close-popup flat color="grey" class="q-ml-auto">Close</q-btn>
       </div>
     </q-card>
