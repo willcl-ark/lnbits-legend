@@ -4,22 +4,42 @@
   <div class="" id="vue">
     {% for page in link %}
     <page size="A4" id="pdfprint">
-      <table style="width: 100%">
         {% for threes in page %}
-        <tr>
           {% for one in threes %}
           <td>
-            <center>
+           
               <qrcode
                 :value="theurl + '/?lightning={{one}}'"
                 :options="{width: 150}"
+                style="margin:2px;"
               ></qrcode>
-            </center>
-          </td>
+           
           {% endfor %}
-        </tr>
         {% endfor %}
-      </table>
+        {% for threes in page %}
+        {% for one in threes %}
+        <td>
+         
+            <qrcode
+              :value="theurl + '/?lightning={{one}}'"
+              :options="{width: 150}"
+              style="margin:2px;"
+            ></qrcode>
+         
+        {% endfor %}
+      {% endfor %}
+      {% for threes in page %}
+      {% for one in threes %}
+      <td>
+       
+          <qrcode
+            :value="theurl + '/?lightning={{one}}'"
+            :options="{width: 150}"
+            style="margin:2px;"
+          ></qrcode>
+       
+      {% endfor %}
+    {% endfor %}
     </page>
     {% endfor %}
   </div>
