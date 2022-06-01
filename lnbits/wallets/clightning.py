@@ -50,17 +50,6 @@ class CLightningWallet(Wallet):
         self.rpc = getenv("CLIGHTNING_RPC")
         self.ln = LightningRpc(self.rpc)
 
-        # check description_hash support (could be provided by a plugin)
-        self.supports_description_hash = False
-        try:
-            answer = self.ln.help("invoicewithdescriptionhash")
-            if answer["help"][0]["command"].startswith(
-                "invoicewithdescriptionhash msatoshi label description_hash"
-            ):
-                self.supports_description_hash = True
-        except:
-            pass
-
         # check last payindex so we can listen from that point on
         self.last_pay_index = 0
         invoices = self.ln.listinvoices()
@@ -86,19 +75,20 @@ class CLightningWallet(Wallet):
         description_hash: Optional[bytes] = None,
     ) -> InvoiceResponse:
         label = "lbl{}".format(random.random())
-        msat = amount * 1000
+        msat = int(amount * 1000)
 
         try:
-            if description_hash:
-                if not self.supports_description_hash:
-                    raise Unsupported("description_hash")
-
-                params = [msat, label, description_hash.hex()]
-                r = self.ln.call("invoicewithdescriptionhash", params)
-                return InvoiceResponse(True, label, r["bolt11"], "")
-            else:
-                r = self.ln.invoice(msat, label, memo, exposeprivatechannels=True)
-                return InvoiceResponse(True, label, r["bolt11"], "")
+            r = self.ln.call(
+                    method='invoice',
+                    payload={
+                        'msatoshi': msat,
+                        'label': label,
+                        'description': memo,
+                        'exposeprivatechannels': True,
+                        'deschashonly': True
+                    },
+                )
+            return InvoiceResponse(True, label, r["bolt11"], "")
         except RpcError as exc:
             error_message = f"lightningd '{exc.method}' failed with '{exc.error}'."
             return InvoiceResponse(False, label, None, error_message)
